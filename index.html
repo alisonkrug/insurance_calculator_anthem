@@ -227,7 +227,8 @@
           }
           console.log(baseRate, ageFactor, smokeFactor);
           // calculates the resulting rate by multiplying each of the variables
-          var rate = (baseRate * ageFactor) * smokeFactor).toFixed(2);
+          var rate = ((baseRate * ageFactor) * smokeFactor).toFixed(2);
+          console.log(rate);
           // converts the resulting rate into a string and adds a dollar sign
           rate = rate.toLocaleString({
             style: 'currency',
