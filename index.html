@@ -34,6 +34,7 @@
       h4 {
         font-family: arial;
         color: gray;
+        font-size: 90%;
       }
 
       /* styling the button */
@@ -85,16 +86,17 @@
 
   <body>
 
-    <!-- adding a heading -->
+    <!-- Main heading -->
     <h1>
       Calculate your estimated Anthem premium
     </h1>
-
+    <!-- Intro text -->
     <h4>
-      <strong>Estimate your Anthem insurance premium for 2018. Results may not be exact. <a href="https://www.anthem.com/wps/portal/ahpbehavioral?content_path=provider/va/f1/s0/t0/pw_ad076722.htm&label=Virginia+Providers">Learn more about Anthem plans here.</a></strong>
+      Anthem is the only insurer who has filed plans with the State Corporation Commission to offer individual health policies in 2019 through the Affordable Care Act exchange in the Roanoke and New River valleys. Premiums are based on a person’s residency, age and smoking status. This is the monthly sticker price. Individuals may qualify for an income-based subsidy. Check <a href="https://www.healthcare.gov/lower-costs/">here</a> to see if you would have qualified under 2018 guidelines.
+<br><br>This calculator is based on the rates Anthem is seeking for its 2019 HealthKeeper plans.
     </h4>
 
-    <!-- you should check to make sure the numbers are right because the image was hard to read -->
+    <!-- Health plan -->
     <h3>
       Select your plan name:
     </h3>
@@ -112,6 +114,8 @@
 
     <!-- break -->
     <br><br>
+
+    <!-- Age -->
     <h3>
       Select your age:
     </h3>
@@ -172,6 +176,19 @@
     <!-- break -->
     <br><br>
 
+    <!-- Rating area factor -->
+    <h3>
+      Where do you live?
+    </h3>
+    <select class="ins-dropdown" id="area">
+    <option value="rating area 8" data-areaFactor="1.0338">Roanoke Valley</option>
+    <option value="rating area 1" data-areaFactor="1.1103">New River Valley</option>
+    </select>
+
+    <!-- break -->
+    <br><br>
+
+    <!-- Do you smoke? -->
     <h3>
       Do you smoke?*
     </h3>
@@ -193,7 +210,7 @@
     </h2>
 
     <h3>
-      <em>*Smoking is only taken into account for ages 18 and up</em>
+      <em>*Smoking status is only taken into account for ages 18 and up</em>
     </h3>
 
     <script>
@@ -204,6 +221,7 @@
           var ageFactor = parseFloat($('#age').find(':selected').attr('data-ageFactor'));
           var smokeSelection = parseFloat($('#smoker').find(':selected').attr('data-smokeSelection'));
           var smokeFactor;
+          var areaFactor = parseFloat($('#area').find(':selected').attr('data-areaFactor'));
           // this is ugly but basically the tobacco factor increases by .05 for certain age brackets.
           // so I found those age brackets, got their ageFactor value, and made smokeFactor depend on their ageFactor
           // and whether they checked "yes" or "no" on the smoking dropdown.
@@ -225,9 +243,9 @@
           } else {
             smokeFactor = 1;
           }
-          console.log(baseRate, ageFactor, smokeFactor);
+          console.log(baseRate, ageFactor, smokeFactor, areaFactor);
           // calculates the resulting rate by multiplying each of the variables
-          var rate = ((baseRate * ageFactor) * smokeFactor).toFixed(2);
+          var rate = (((baseRate * areaFactor) * ageFactor) * smokeFactor).toFixed(2);
           console.log(rate);
           // converts the resulting rate into a string and adds a dollar sign
           rate = rate.toLocaleString({
